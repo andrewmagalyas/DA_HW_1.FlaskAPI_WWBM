@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "question": "What is the capital of France?",
+    "options": ["Berlin", "Madrid", "Paris", "Rome"],
+    "correct_answer": "Paris",
+    "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "question": "Which planet in our solar system is known as the \"Red Planet\"?",
+    "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+    "correct_answer": "Mars",
+    "difficulty": "medium"
+  },
+  {
+    "id": 3,
+    "question": "Which element has the highest melting point?",
+    "options": ["Tungsten", "Carbon", "Osmium", "Titanium"],
+    "correct_answer": "Tungsten",
+    "difficulty": "hard"
+  }
+]

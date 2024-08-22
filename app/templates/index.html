@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Wants to Be a Millionaire</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Who Wants to Be a Millionaire</h1>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button onclick="checkAnswer()">Submit Answer</button>
+    <div id="result"></div>
+
+    <script>
+        let currentQuestion;
+
+        async function loadQuestion() {
+            const response = await axios.get('/questions');
+            const questions = response.data;
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+
+            document.getElementById('question').innerText = currentQuestion.question;
+            const optionsHtml = currentQuestion.options.map(option =>
+                `<button onclick="selectOption('${option}')">${option}</button>`
+            ).join('');
+            document.getElementById('options').innerHTML = optionsHtml;
+        }
+
+        let selectedAnswer;
+
+        function selectOption(option) {
+            selectedAnswer = option;
+            document.querySelectorAll('#options button').forEach(btn => {
+                btn.style.backgroundColor = btn.innerText === option ? 'lightblue' : '';
+            });
+        }
+
+        async function checkAnswer() {
+            if (!selectedAnswer) {
+                alert('Please select an answer');
+                return;
+            }
+            const response = await axios.post('/answer', {
+                question_id: currentQuestion.id,
+                answer: selectedAnswer
+            });
+            const result = response.data;
+            document.getElementById('result').innerText = result.correct ? 'Correct!' : `Wrong. The correct answer is ${result.correct_answer}`;
+            setTimeout(loadQuestion, 2000);
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
